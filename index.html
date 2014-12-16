@@ -1,50 +1,49 @@
 ---
 layout: default
-group: home
+title: Solar Theme
 ---
-{% include JB/setup %}
-<div class="page-title-inline">
-	{% if page.group == 'home' %}
-	<h1>{{ site.title }} </h1>
-	{% if site.tagline %}<h2>{{ site.tagline }}</h2>{% endif %}
-	{% else %}
-	<h1>{{ page.title }} </h1>
-	{% if page.tagline %}<h2>{{ page.tagline }}</h2>{% endif %}
-	{% endif %}
-</div>
-<div class="cont932">
-	<hr style="margin-top: 0;">
-	<div id="journal-articles-block">
-	{% for post in paginator.posts %}
-		<div class="journal-article">
-			<div class="journal-post-info">
-				{% assign categories_list = post.categories %}
-				{% assign category = categories_list.first %}
-				{% include themes/Snail/category.html %}
-				{% assign categories_list = nil %}
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="{{ post.url }}">{{ post.title }}</a><span class="author">{{ post.tagline }}</span></h1>
-				{% case site.excerpt %}
-				{% when "truncate_words" %}
-				<span class="teaser"><p>{{ post.content | strip_html | truncatewords: 20 }}</p>
-				{% when "teaser" %}
-				<span class="teaser">{{ post.content  | split:'<!--more-->' | first }}
-				{% endcase %}
-				</span>
-				<span class="readmore"><a href="{{ post.url }}">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		{% endfor %}
+
+{% for post in paginator.posts %}
+
+	<article class="post">
+
+		{% if post.external-url %}
+			<h1>
+				<a href="{{ post.external-url }}">{{ post.title }}</a>
+				<a class="anchor" href="{{ post.url }}"><i class="icon-anchor"></i></a>
+			</h1>
+		{% else %}
+			<h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
+		{% endif %}
+
+		<div class="post-content">{{ post.content }}</div>
+
+	</article>
+
+{% endfor %}
+
+
+
+{% if paginator.total_pages > 1 %}
+	<div class="postnavigation">
+
+		{% if paginator.previous_page %}
+			{% if paginator.page == 2 %}
+				<a class="prev left" href="/">&larr; Newer</a>
+			{% else %}
+				<a class="prev left" href="/page{{paginator.previous_page}}/">&larr; Newer</a>
+			{% endif %}
+		{% else %}
+			<span class="nope left">&larr; Newer</span>
+		{% endif %}
+
+		<span class="pages">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+
+		{% if paginator.next_page %}
+			<a class="next right" href="/page{{paginator.next_page}}/">Older &rarr;</a>
+		{% else %}
+			<span class="nope right">Older &rarr;</span>
+		{% endif %}
+
 	</div>
-	{% if paginator.next_page  %}
-	<div id="journal-arrows-cont">
-			<a href="{{ paginator.next_page_path }}" class="journal-arrow ja-forward"></a>
-	</div>
-	{% endif %}
-	<div class="clearboth"></div>
-	<div id="journal-loadmore">Load More…</div>
-	<div class="clearboth"></div>
-</div>
-<div class="clearboth"></div>
+{% endif %}
