@@ -6,9 +6,9 @@ date:   2014-12-30 7:28pm
 
 Use wget to download Kaggle data in terminal.
 
-{% highlight bash %}
+```bash
 wget  https://www.kaggle.com/account/login?ReturnUrl=%2fc%2fbelkin-energy-disaggregation-competition%2fdownload%2fH3.zip --post-data 'username=yourname&password=yourpasswd'
-{% endhighlight %}
+```
 
 ref: http://willz.net/blog/2013/07/10/download_kaggle_data_from_teminal/
 
